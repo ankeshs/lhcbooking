@@ -1,0 +1,62 @@
+#loginform
+{
+	background: #1e7cd8;
+	padding:10px;
+	width: 300px;
+	border: #19669f 4px solid;
+}
+#loginform input
+{
+	border: #e5e5e5 2px solid;
+	font-size: 16px;
+}
+#loginform span
+{
+	font-size: 16px;
+	color: #ffffff;
+}
+#loginform button{
+	border: #e5e5e5 2px solid;
+	float: right;
+	margin-right: 30px;
+}
+#loginform span.error{
+	width: 30%;
+	color: #ff0000;
+	position: fixed;
+	top: 0px;
+	left: 35%;	
+	text-align:center;
+	background: #e5e5e5;
+	border: #bfbfbf 2px solid;
+	border-top: none;
+	padding: 5px;
+	z-index: 100;		
+}
+
+#footer{
+	width:100%;	
+	text-align:center;
+	bottom: 100%;
+	background: #4d4d4d;
+	color: #e5e5e5;
+}
+
+#footer #sp1{
+	margin-left:10px;
+	float: left;
+}
+
+#footer #sp3{
+	margin-right:10px;
+	float: right;
+}
+
+#footer br{
+	float: none;
+}
+
+#footer a{
+	text-decoration: none;
+	color: #e5e5e5;
+}
