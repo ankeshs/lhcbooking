@@ -5,4 +5,6 @@
 					'db' => "booking");
 	define('COOKI','lhcbooking_ID');
 	define('COOKr','lhcbooking_userrole');
+	define('COOKpath',"/home/ankeshs/public_html");
+	define('TIMEOUTVAL',30);
 ?>

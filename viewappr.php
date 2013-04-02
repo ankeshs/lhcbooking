@@ -1,7 +1,6 @@
 <?php
 require_once 'settings.php';
 require_once 'users.php';
-
 session_start();
 if(! isset($_COOKIE[COOKI])){
 	die("Session expired or invalid page request. <br>You need to <a class='explink' href='index.php'>login</a> first!");
@@ -14,33 +13,34 @@ $to=date("H:m:s");
 require_once 'pgdb.php';
 $pg=$_GET['page'];
 switch($pg){
-	case 3:
-	$query="with tbcp as (with tbc as (select bookid from transaction natural join booking where transtype='B' and userid='$uid') select bookid from approval natural join tbc where state='R') select * from tbcp natural join booking natural join location;";
-	$rs=pg_query($query);
-	break;
-	
-	case 2:
-	$query="with tbcp as (with tbc as (select bookid from transaction natural join booking where transtype='B' and userid='$uid' and (bookdate < '$do' or (bookdate = '$do' and endtime < '$to'))) select * from  tbc except (select bookid from approval natural join tbc where state='R')) select * from tbcp natural join booking natural join location;";
-	$rs=pg_query($query);
-	break;
-	
-	case 1:
-	$query="with tbcp as (with tbc as (select bookid from transaction natural join booking where transtype='B' and userid='$uid' and (bookdate > '$do' or (bookdate = '$do' and endtime >= '$to'))) select * from  tbc except (select bookid from approval natural join tbc where state='R')) select * from tbcp natural join booking natural join location;";
-	$rs=pg_query($query);
-	break;
-}
-?>
-	
+	case 4:
+		$query="select * from booking natural join location natural join approval where userid='$uid' and (bookdate < '$do' or (bookdate = '$do' and endtime < '$to')) and state <> 'R';";
+		break;
 		
-<?php
+	case 1:
+		$query="select * from booking natural join location natural join approval where userid='$uid' and (bookdate > '$do' or (bookdate = '$do' and endtime >= '$to')) and state='P';";
+		break;
+		
+	case 2:
+		$query="select * from booking natural join location natural join approval where userid='$uid' and (bookdate > '$do' or (bookdate = '$do' and endtime >= '$to')) and state='A';";
+		break;
+		
+	case 3:
+		$query="select * from booking natural join location natural join approval where userid='$uid' and state='R';";
+		break;
+		
+}
+$rs=pg_query($query);
+
 while($a=pg_fetch_assoc($rs)){
 	?>
 	<div class="viewbook">
 		<table><tr>
 		<td id="vbk01">
 		<?php echo "Booking ID: <b>".$a['bookid']."</b><br>Date: ".$a['bookdate']."<br>Start: ".$a['starttime']."<br>End: ".$a['endtime']."<br>Lecture hall: ".$a['hallno'];
-		if($pg==1){			
-			echo "<a href='cancel.php'><button>Cancel</button></a>";
+		if($pg==1){
+			echo "<br><a href='approve.php'><button>Approve</button></a>";
+			echo "<a href='approve.php'><button>Reject</button></a>";
 		}
 		?>
 		</td>
@@ -73,13 +73,4 @@ while($a=pg_fetch_assoc($rs)){
 	<?php
 }	
 ?>	
-<?php
 
-function getStatus($bid){
-	$query="select count(*) from booking natural join approval where bookid='$bid' and (state='P' or state='R');";
-	$rs=pg_query($query);
-	$c=pg_fetch_array($rs);
-	if($c[0]) return true;
-	return false;
-}
-?>

@@ -155,4 +155,25 @@ function dashBoard($db){
 		<?php
 	}	
 }
+
+function messageDisplay($txt){
+	?>
+	<div id="msgDisplay">
+		<span class="error">			
+			<?php echo $txt; ?> 
+		</span>
+	</div>
+	<script type="text/javascript">
+	function msgTxtShow() {
+		$('#msgDisplay span.error').hide();		
+		$('#msgDisplay span.error').slideDown("slow");
+		$('#msgDisplay span.error').click(
+			function (){
+				$('#msgDisplay span.error').fadeOut();
+			}
+		);
+	}
+	</script>
+	<?php
+}
 ?>

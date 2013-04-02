@@ -1,3 +1,7 @@
+a.explink{
+	text-decoration:underline;
+	color:#0000ff;
+}
 #loginform
 {
 	background: #1e7cd8;
@@ -41,6 +45,10 @@ span.error{
 	z-index: 100;		
 }
 
+#msgDisplay span.error{
+	 color: #0000ff;
+}
+
 div.dialog{
 	width: 30%;	
 	position: fixed;
@@ -53,12 +61,15 @@ div.dialog{
 	z-index: 90;		
 }
 
-#footer{	
+#footer{
+	position:fixed;		
 	width:100%;	
 	text-align:center;
-	bottom: 100%;
+	bottom: 0px;
+	left:0px;	
 	background: #4d4d4d;
 	color: #e5e5e5;
+	z-index: 100px;
 }
 
 #footer #sp1{
@@ -174,5 +185,91 @@ a{
 }
 
 #cpane{
-	width: 50%;
+	width: 50%;	
+	margin-left:10px;	
+	float: left;
+	position: relative;
+	margin-bottom:80px;	
+}
+
+#addform #se{
+		margin-top:10px;
+		margin-bottom:10px;
+		padding:3px;
+		border: 1px #bfbfbf solid;
+		width: 90%;
+	}
+	#addform #se input{
+		width: 70px;
+		margin-right:20px;
+	}
+	#addform #rq, #addform #appr{
+		margin-top:10px;
+		margin-bottom:10px;
+		padding:3px;
+		border: 1px #bfbfbf solid;
+		width: 90%;
+	}
+	#addform #appr td{
+		vertical-align: top;		
+	}
+	#addform #appr td.formname{
+		min-width: 60px;
+		font-weight:bold;		
+	}
+	#addform #appr .apprdetail{
+		margin-left:10px;
+	}
+	#addform #appr select{
+		width: 200px;
+	}
+	#addform #rq td{
+		padding-right:15px;
+	}
+	#addform #avhalls #alh{
+		border: 1px #bfbfbf solid;
+		width: 90%;		
+	}
+	#addform #avhalls #alh td{
+		padding-left:10px;
+	}
+	#addform textarea{
+		width:90%;
+		border: 1px #bfbfbf solid;
+	}
+	
+div.viewbook{
+	width:90%;
+	border: 2px solid;
+	background: #e4dddd;
+	margin-left:20px;
+	margin-bottom:15px;
+	padding-left:10px;
+	padding-top:5px;
+	padding-bottom: 5px;
+}
+div.viewbook table, div.viewbook tr{
+	width:100%;
+}
+div.viewbook td{
+	vertical-align: top;
+}
+div.viewbook #vbk01{
+	width:25%;	
+}
+
+div.viewbook #vbk02{
+	width:45%;		
+}	
+	
+div.viewbook span.pen{
+	color: #0000ff;
+}
+
+div.viewbook span.app{
+	color: #2e9242;
+}
+
+div.viewbook span.rej{
+	color: #ff0000;
 }
