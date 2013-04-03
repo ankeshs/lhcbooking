@@ -29,7 +29,7 @@ $desc=array('1a'=>'Form 1(a) is available to student coordinators. It requires a
 '2b' => 'Form 2(b) is available to all faculty members who are course instructors. It does not requires any approval.'
 );
 ?>
-
+<div id="addformdiv">
 <form action="addbook.php" method="post" name="addform"id="addform">
 	<div id="rq">User: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i><?php echo $_COOKIE[COOKI]; ?></i>
 		<input type="hidden" name="user" value="<?php echo $_COOKIE[COOKI]; ?>" /></div>
@@ -101,7 +101,7 @@ $desc=array('1a'=>'Form 1(a) is available to student coordinators. It requires a
 	</div>
 	<input type="submit" name="book" value="Book" />
 </form>
-
+</div>
 <script type="text/javascript">
 	$('#bdate0').change(process);
 	$('#start0').change(function(){

@@ -12,7 +12,8 @@ $e=$_GET['end'];
 echo $d." ".$s." ".$e;
 $query= "with clash as ((select dateof, hallno, starttime, endtime from calendar natural join timetable where starttime >= '$s' and endtime <='$e' and dateof='$d') union ((select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '$s' and endtime <='$e' and bookdate='$d' and state <> 'R') except (select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '$s' and endtime <='$e' and bookdate='$d' and state = 'R'))) select * from clash;";
 
-$rs=pg_query($query);
+$rs=pg_query($query) or die("<br>Input Date and Time");
+if(! $rs) exit;
 ?>
 <div id="alh">
 Other bookings at the same time:<br>

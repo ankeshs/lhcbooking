@@ -14,9 +14,9 @@ $rs=pg_query("with tbc as (select bookid from transaction natural join booking w
 $cl = pg_fetch_array($rs);
 print_r($cl);
 if ($cl[0] == 0) {
-	header("Location: index.php?msgtxt=Requested Booking does not exist or not approved");
-	//exit;
+	header("Location: index.php?msgtxt=Requested Booking does not exist or rejected");	
 }
+else{
 echo "Booking found\n";
 pg_query("begin;") or die("Could not start transaction\n");
 $res1 = pg_query("INSERT INTO transaction(userid, bookid, transtype) values ('$user', $bid, 'C');");
@@ -29,5 +29,6 @@ if ($res1 and $res2) {
 	//echo "Rolling back transaction\n";	
 	pg_query("ROLLBACK") or die("Transaction rollback failed\n");
 	header("Location: index.php?msgtxt=Cancellation failed");	
+}
 }
 ?>

@@ -33,20 +33,20 @@ switch($pg){
 $rs=pg_query($query);
 
 while($a=pg_fetch_assoc($rs)){
+	$bip=$a['bookid'];
 	?>
 	<div class="viewbook">
 		<table><tr>
 		<td id="vbk01">
 		<?php echo "Booking ID: <b>".$a['bookid']."</b><br>Date: ".$a['bookdate']."<br>Start: ".$a['starttime']."<br>End: ".$a['endtime']."<br>Lecture hall: ".$a['hallno'];
 		if($pg==1){
-			echo "<br><a href='approve.php'><button>Approve</button></a>";
-			echo "<a href='approve.php'><button>Reject</button></a>";
+			echo "<br><a href='approve.php?bid=$bip&act=A'><button>Approve</button></a>";
+			echo "<a href='approve.php?bid=$bip&act=R'><button>Reject</button></a>";
 		}
 		?>
 		</td>
 		<td id="vbk02">
-		<?php
-		$bip=$a['bookid'];
+		<?php		
 		$qr="select * from booking natural join transaction where bookid=$bip and transtype='B';";
 		$rsp=pg_query($qr);
 		$ap=pg_fetch_assoc($rsp);					
@@ -64,6 +64,12 @@ while($a=pg_fetch_assoc($rs)){
 				case 'R': echo "<span class='rej'>Rejected by " ; break;
 			}
 			echo getUserDesc($ap['userid'])."</span><br>";
+		}
+		$query="with apptype as ( with approvalP as (select * from approval where bookid=$bip and state='P') ( select userid, approver from approvalP natural join student natural join executive natural join (values ('executive')) a(approver)) union ( select userid, approver from approvalP natural join faculty natural join (values ('faculty')) a(approver)) union ( select userid, authtype as approver from approvalP natural join auth) union ( select userid, offtype as approver from approvalP natural join office) ) select * from apptype natural join precedence order by weight limit 1; ";
+		$rsp=pg_query($query);
+		if(pg_num_rows($rsp)){
+			$ap=pg_fetch_assoc($rsp);
+			if($ap['userid']==$uid && $pg==1) echo "<div id='appbut'>Urgent</div>";
 		}
 		?>
 		</td>

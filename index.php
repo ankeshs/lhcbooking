@@ -40,6 +40,7 @@
 					<div id='lsbt13'><a href="javascript: void(0)">Rejected</a></div>
 				</div>
 				<div class="lsbt" id="lsbt2"><a href="javascript: void(0)">All Bookings</a></div>
+				
 			</div>
 			<script type="text/javascript">
 				$("#left-sidebar div.lscd").hide();

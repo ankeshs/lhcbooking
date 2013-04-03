@@ -1,4 +1,5 @@
 <?php
+	error_reporting(0);
 	$DB_SETUP=array('host' => "localhost", 
 					'user' => "postgres", 
 					'pass' => "postgres", 

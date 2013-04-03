@@ -89,30 +89,47 @@ function dashBoard($db){
 			</div>
 			<div id="desc">
 				<span id="nam"><?php echo $ud['name']; ?></span><br>
-				<?php
-					$role=$_COOKIE[COOKr];
-					switch($role){
-						case 10: case 11: case 12:
-							$query="select * from users natural join student where userID='$userID';";
-							$sd=getAssoc($db, $query);
-							echo "User type: Student<br> Roll no. : ".$sd['rollno']."<br>";
-							if($role==11){
-								$query="select * from users natural join student natural join coordinator where userID='$userID';";
-								$cd=getAssoc($db, $query);
-								echo "Role: Coordinator<br>". $cd['club'];
-							}
-							if($role==12){
-								$query="select * from users natural join student natural join executive where userID='$userID';";
-								$cd=getAssoc($db, $query);
-								echo "Role: Executive<br>". $cd['post'];
-							}
-							break;
-						case 20:
-						 	$query="select * from users natural join faculty where userID='$userID';";
-							$sd=getAssoc($db, $query);
-							echo "User type: Faculty<br>Faculty ID: ".$sd['facid']."<br>";
-							break;						
+				<?php			
+					$query="select * from users natural join student where userID='$userID';";
+					$rs=pg_query($query);
+					if(pg_num_rows($rs)>0){
+						$arr=pg_fetch_assoc($rs);
+						echo "User type: Student<br>Roll no. : ".$arr['rollno']."<br>";
+					}					
+					$query="select * from users natural join student natural join coordinator where userID='$userID';";
+					$rs=pg_query($query);
+					if(pg_num_rows($rs)>0){
+						$arr=pg_fetch_assoc($rs);					
+						echo "Role: Coordinator<br>". $arr['club'];
+					}			
+					$query="select * from users natural join student natural join executive where userID='$userID';";
+					$rs=pg_query($query);
+					if(pg_num_rows($rs)>0){
+						$arr=pg_fetch_assoc($rs);
+						echo "Role: Executive<br>". $arr['post'];
+					}			
+			
+				 	$query="select * from users natural join faculty where userID='$userID';";
+					$rs=pg_query($query);
+					if(pg_num_rows($rs)>0){
+						$arr=pg_fetch_assoc($rs);
+						echo "User type: Faculty<br>Faculty ID: ".$arr['facid']."<br>";
+					}
+					
+					$query="select * from users natural join auth where userID='$userID';";
+					$rs=pg_query($query);
+					if(pg_num_rows($rs)>0){
+						$arr=pg_fetch_assoc($rs);
+						echo "Role: ".$arr['authtype']."<br>";
+					}
+					
+					$query="select * from users natural join office where userID='$userID';";
+					$rs=pg_query($query);
+					if(pg_num_rows($rs)>0){
+						$arr=pg_fetch_assoc($rs);
+						echo "Role: ".$arr['offtype']."<br>";
 					}				
+							
 				?>
 			</div>
 			<div id="profile">				
