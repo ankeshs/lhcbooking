@@ -20,7 +20,7 @@ if(isset($_POST['login']) && isset($_POST['pass']))
 {
 	$login = $_POST['login'];
 	$password = $_POST['pass'];
-	$expire=time()+60*10;	
+	$expire=time()+60*TIMEOUTVAL;	
 	if(connect($login, $password, $db_handle)){		
 		setcookie(COOKI, $login, $expire, "/");
 		//echo $_COOKIE[COOKI];

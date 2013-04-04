@@ -6,6 +6,7 @@ if(! isset($_COOKIE[COOKI])){
 
 
 require_once 'pgdb.php';
+require_once 'users.php';
 
 $user=$_POST['user'];
 $dateof=$_POST['bdate'];
@@ -102,6 +103,7 @@ if ($cl[0] == 0) {
 	if ($res1 and $res2 and $res3 and $res4) {
 		//echo "Commiting transaction\n";
 		pg_query("COMMIT") or die("Transaction commit failed\n");
+		nextApprovalAlert($user, $ci, "");
 		header('Location:index.php?msgtxt=Booking successful');
 	} else {
 		//echo "Rolling back transaction\n";

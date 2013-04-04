@@ -20,6 +20,7 @@ if($cl[0]){
 	if ($res1) {
 		//echo "Commiting transaction\n";
 		pg_query("COMMIT") or die("Transaction commit failed\n");
+		nextApprovalAlert("", $bid, $uid);
 		header("Location: index.php?msgtxt=Request successfully processed");
 	} else {
 		//echo "Rolling back transaction\n";

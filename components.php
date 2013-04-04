@@ -193,4 +193,15 @@ function messageDisplay($txt){
 	</script>
 	<?php
 }
+
+function testingMsg(){
+	?>
+	<div class="generic">
+		For testing:<br>
+		User IDs : user1, user2, ... , user18 <br>
+		Password : Pass <br> <br>
+		<a class="explink" href="admin/">Admin Page</a>					
+	</div>
+	<?php
+}
 ?>

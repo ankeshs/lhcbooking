@@ -6,11 +6,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/style.css" />
-		<script type="text/javascript" src="js/jquery-latest.js"></script>
+		<link rel="stylesheet" href="css/style.css" />		
+		
+		<script type="text/javascript" src="js/jquery-latest.js"></script>		
 		<title>LHC Booking Portal</title>
 	</head>
-	<body>
+	<body><div id="vbody">
 		<div id="main">			
 		<?php		
 		if(isset($_COOKIE[COOKI])){
@@ -40,6 +41,7 @@
 					<div id='lsbt13'><a href="javascript: void(0)">Rejected</a></div>
 				</div>
 				<div class="lsbt" id="lsbt2"><a href="javascript: void(0)">All Bookings</a></div>
+				<div class="lsbt" id="lsbt5"><a href="javascript: void(0)">Core Time Table</a></div>
 				
 			</div>
 			<script type="text/javascript">
@@ -73,6 +75,12 @@
 				});
 				$("#left-sidebar #lsbt4").click(function (){
 					$("#ajaxpane").load('form.php');
+				});				
+				$("#left-sidebar #lsbt2").click(function (){
+					$("#ajaxpane").load('allbook.php');
+				});
+				$("#left-sidebar #lsbt5").click(function (){
+					$("#ajaxpane").load('timetable.php');
 				});
 			</script>
 			<div id="cpane">
@@ -104,12 +112,18 @@
 					case 2:
 					loginForm(array('errmsg' => 'Session expired or invalid page request. <br>You need to login first!'));
 					break;
+				}
 				?>
-				<script>loginErrorShow();</script>
+								
+				<script>
+					loginErrorShow();
+				</script>
+				
 				<?php
-			}
+			
 		}
 			else loginform(array()); 
+			testingMsg();			
 		}
 		?>
 		</div>
@@ -117,5 +131,5 @@
 		<?php
 		footer();
 		?>		
-	</body>
+	</div></body>
 </html>
