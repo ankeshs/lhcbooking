@@ -1,0 +1,29 @@
+insert into calendar (dateof, dayof) values ('1 April 2013', 'M');
+insert into timetable (dayof, course, meettype, hallno, starttime, endtime) values ('M', 'MTH102', 'L', 'L17', '1000', '1100');
+
+--All bookings within existing time window
+select * from calendar natural join timetable where starttime >= '0900' and endtime <='1400' and dateof='1 April 2013';
+select * from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state <> 'R';
+
+select dateof, hallno, starttime, endtime from calendar natural join timetable where starttime >= '0900' and endtime <='1400' and dateof='1 April 2013';
+select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state <> 'R';
+
+(select dateof, hallno, starttime, endtime from calendar natural join timetable where starttime >= '0900' and endtime <='1400' and dateof='1 April 2013') union (select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state <> 'R');
+
+with clash as ((select dateof, hallno, starttime, endtime from calendar natural join timetable where starttime >= '0900' and endtime <='1400' and dateof='1 April 2013') union ((select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state <> 'R') except (select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state = 'R'))) select count(*) from clash;
+
+with tbc as (select bookid from transaction natural join booking where bookid=2 and transtype='B' and userid='user2') select count(*) from tbc except (select bookid from approval where bookid=2 and state='R');
+
+(select bookid from approval where userid='user10') except (select a1.bookid from approval as a1, approval as a2 where a1.userid='user10' and a2.state='R' and a1.bookid=a2.bookid);
+
+select * from booking natural join transaction where userid='user1' and transtype='B' and (bookdate > '2013/03/13' or (bookdate = '2013/03/13' and endtime >= '18:45')) ;
+
+with tbcp as (with tbc as (select bookid from transaction natural join booking where transtype='B' and userid='user2') select * from  tbc except (select bookid from approval natural join tbc where state='R')) select * from tbcp natural join booking;
+
+with clash as ((select dateof, hallno, starttime, endtime from calendar natural join timetable where starttime >= '0900' and endtime <='1400' and dateof='1 April 2013') union ((select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state <> 'R') except (select bookdate as dateof, hallno, starttime, endtime from booking natural join approval natural join location where starttime >= '0900' and endtime <='1400' and bookdate='1 April 2013' and state = 'R')))  select * from lechall natural join ((select hallno from lechall) except (select hallno from clash)) as cavhl;
+
+with desct as ( (select userid, post as typeof from users natural join student natural join executive) union (select userid, club as typeof from users natural join student natural join coordinator) union (select userid, facid as typeof from faculty) union (select userid, authtype as typeof from auth) union (select userid, offtype as typeof from office) ) select * from desct;
+
+with apptype as ( with approvalP as (select * from approval where bookid=10 and state='P') ( select userid, approver from approvalP natural join student natural join executive natural join (values ('executive')) a(approver)) union ( select userid, approver from approvalP natural join faculty natural join (values ('faculty')) a(approver)) union ( select userid, authtype as approver from approvalP natural join auth) union ( select userid, offtype as approver from approvalP natural join office) ) select * from apptype natural join precedence order by weight limit 1; 
+
+SELECT dayof, course, starttime, endtime, array_to_string(array_agg(hallno), ',') as halls FROM timetable GROUP BY dayof, course, starttime, endtime;

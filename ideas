@@ -1,0 +1,6 @@
+* A haskell library to make queries on the web to look for attributes associated with people/objects
+* A haskell library/new language based on haskell facilitating aspects of logic based/online multiplayer game development
+* The Haskell equivalent of an Object Relational Mapping ( noSQL ! )
+* A Drupal like CMS with module support using Happstack or any other Haskell web framework
+* For web development, Happs can be a good starting point
+* Numerical solvers (equations, integrals, linear algebra) and mathematical plots (CAS: Computer Algebra System)
